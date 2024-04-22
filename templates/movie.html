@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Database</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Style for navigation bar */
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        /* Style for table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style for search and filter bar */
+        .search-filter-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-filter-bar input[type="text"] {
+            padding: 6px;
+            width: 200px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation bar -->
+<!-- <div class="navbar">
+    <a href="#">Title</a>
+    <a href="#">Poster Image</a>
+    <a href="#">Genre</a>
+    <a href="#">Rating</a>
+    <a href="#">Release Year</a>
+    <a href="#">Metacritic Rating</a>
+    <a href="#">Runtime Movie</a>
+</div> -->
+
+<!-- Search and filter bar -->
+<!-- Search and filter bar -->
+<label for="genre">Filter by Genres:</label>
+<select name="title" id="genre">
+    <option value="">All Genres</option>
+    <option value="Action">Action</option>
+    <option value="Drama">Drama</option>
+    <!-- Add more genre options as needed -->
+</select>
+
+
+<!-- Table to display data -->
+<table id="movie-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Poster Image</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Release Year</th>
+            <th>Metacritic Rating</th>
+            <th>Runtime Movie</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Populate table rows with data dynamically -->
+        
+            {% for single_movie in movie %}
+            <tr>
+                <td>{{single_movie.title}}</td>
+                <td><img src="path_to_image" alt="Poster Image">{{single_movie.poster}}</td>
+                <td>{{single_movie.genre}}</td>
+                <td>{{single_movie.rating}}</td>
+                <td>{{single_movie.release_year}}</td>
+                <td>{{single_movie.metacrictic_rating}}</td>
+                <td>{{single_movie.runtime_movie}}</td>
+            </tr>
+            {% endfor %}
+
+           
+        
+        <!-- Add more rows for additional data -->
+    </tbody>
+</table>
+
+
+<script>
+    $(document).ready(function() {
+       
+        function fetchMoviesByGenre(genre) {
+            $.ajax({
+                url: '/movie_filter/', 
+                type: 'GET',
+                data: {genre: genre},  
+                dataType: 'json',
+                success: function(data) {
+                    // Clear existing table rows
+                    $('#movie-table tbody').empty();
+                    // Append new table rows with filtered movie data
+                    $.each(data, function(index, movie) {
+                        var row = '<tr>' +
+                                  '<td>' + movie.title + '</td>' +
+                                  '<td><img src="' + movie.poster + '" alt="Poster Image"></td>' +
+                                  '<td>' + movie.genre + '</td>' +
+                                  '<td>' + movie.rating + '</td>' +
+                                  '<td>' + movie.release_year + '</td>' +
+                                  '<td>' + movie.metacritic_rating + '</td>' +
+                                  '<td>' + movie.runtime_movie + '</td>' +
+                                  '</tr>';
+                        $('#movie-table tbody').append(row);
+                    });
+                },
+                
+                error: function(xhr, status, error) {
+                   
+                    console.error('Error fetching movies:', error);
+                }
+            });
+        }
+    
+        // Handle change event of genre dropdown menu
+        $('#genre').change(function() {
+            var selectedGenre = $(this).val();
+            fetchMoviesByGenre(selectedGenre);
+        });
+
+
+        // $('#submit_id').click(function() {
+
+        //     console.log("console_hello");
+
+        //     $.ajax({
+        //         url: '/movie_filter/', 
+        //         type: 'GET',
+        //         data: {genre: genre},  
+        //         dataType: 'json',
+        //         success: function(data) {
+        //             // Clear existing table rows
+        //             $('#movie-table tbody').empty();
+        //             // Append new table rows with filtered movie data
+        //             $.each(data, function(index, movie) {
+        //                 var row = '<tr>' +
+        //                           '<td>' + movie.title + '</td>' +
+        //                           '<td><img src="' + movie.poster + '" alt="Poster Image"></td>' +
+        //                           '<td>' + movie.genre + '</td>' +
+        //                           '<td>' + movie.rating + '</td>' +
+        //                           '<td>' + movie.release_year + '</td>' +
+        //                           '<td>' + movie.metacritic_rating + '</td>' +
+        //                           '<td>' + movie.runtime_movie + '</td>' +
+        //                           '</tr>';
+        //                 $('#movie-table tbody').append(row);
+        //             });
+        //         },
+                
+        //         error: function(xhr, status, error) {
+                   
+        //             console.error('Error fetching movies:', error);
+        //         }
+        //     });
+        
+        
+        
+        // });
+    });
+    </script>
+
+</body>
+</html>

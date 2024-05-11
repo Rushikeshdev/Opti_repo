@@ -8,10 +8,9 @@ from movieshow_app.views import *
 
 urlpatterns =[
 
-    path('dashboard/',MovieHome.as_view(),name='dashboard'),
-     path('movie_filter/',MovieFilter.as_view(),name='movie_filter'),
-    path('movie_details/', MovieView.as_view(),name='movie'),
-    path('movie_details/<int:pk>', MovieView.as_view(),name='movie')
+    
+    path('', MovieView.as_view(),name='movie'),
+    
 
 
 

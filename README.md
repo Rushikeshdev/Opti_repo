@@ -1,9 +1,9 @@
-Project Name:
+**Project Name:**
 
 The Movies@Mariana
 
 
-Description:
+**Description:**
 Mariana Tek there is showing the movies details.By using mariana tek we can get movies deatils like vice.
 
 Title
@@ -16,10 +16,10 @@ Runtime
 
 There is one genre filter is provided by using this we can filter movie and also we can search movie used with movie title.
 
-Prerequisites:
+**Prerequisites:**
 Python 3.8.10
 
-Installation:
+**Installation:**
 
 Step 1 : Create Virtual Env = python3 -m venv env_name
 
